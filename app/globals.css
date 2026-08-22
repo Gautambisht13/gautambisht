@@ -1,0 +1,209 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Design tokens — Neo-Brutalist / Retro-Space
+   Paper base, pure black ink, white card surfaces, electric purple accent,
+   and a single near-black "void" reserved for the hero starfield.
+   ========================================================================== */
+@theme {
+  --color-paper: #f4f4f0;
+  --color-ink: #000000;
+  --color-card: #ffffff;
+  --color-brand: #7e3af2;
+  --color-brand-dark: #5b21b6;
+  --color-wash: #ebe3ff;
+  --color-void: #0b0b14;
+
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  --shadow-brutal-xs: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-brutal-sm: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-brutal: 6px 6px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-brutal-lg: 10px 10px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-brutal-brand: 6px 6px 0px 0px var(--color-brand);
+
+  --animate-float-slow: float-slow 7s ease-in-out infinite;
+  --animate-float-badge: float-badge 5s ease-in-out infinite;
+  --animate-drift: drift 9s ease-in-out infinite;
+  --animate-twinkle: twinkle 3.5s ease-in-out infinite;
+  --animate-ticker: ticker 32s linear infinite;
+  --animate-blink: blink 1.6s step-end infinite;
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-18px) rotate(2deg);
+  }
+}
+
+@keyframes float-badge {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+
+  }
+  33% {
+    transform: translate(6px, -8px);
+  }
+  66% {
+    transform: translate(-5px, 5px);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.15;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+@layer base {
+  * {
+    border-color: var(--color-ink);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* clears the sticky nav when jumping to a section */
+    scroll-padding-top: 6.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    /* the grid-paper backdrop */
+    background-image: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.07) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.07) 1px, transparent 1px);
+    background-size: 32px 32px;
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  /* Neo-brutalist focus: a hard offset slab, never a soft glow */
+  :focus-visible {
+    outline: 3px solid var(--color-brand);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background-color: var(--color-brand);
+    color: #ffffff;
+  }
+}
+
+/* ==========================================================================
+   Component primitives
+   ========================================================================== */
+@utility press {
+  /* the shared "physical button" behaviour: the card slides onto its shadow */
+  transition:
+    transform 120ms ease-out,
+    box-shadow 120ms ease-out,
+    background-color 120ms ease-out,
+    color 120ms ease-out;
+}
+
+.reveal {
+  opacity: 0;
+}
+
+.reveal[data-visible="true"] {
+  animation: rise 620ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Edge-fade for the marquee so words enter and leave, not pop */
+.ticker-mask {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 4%,
+    #000 96%,
+    transparent
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "gautam-singh-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "fonts": "node scripts/fetch-fonts.mjs",
+    "cv": "node scripts/generate-cv.mjs"
+  },
+  "dependencies": {
+    "next": "15.4.6",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "lucide-react": "^0.539.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.8.3"
+  }
+}
