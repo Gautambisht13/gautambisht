@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   title: `${profile.name} — ${profile.role}`,
   description: profile.subheading,
    icons: {
-    icon: "/icon.png",
+    icon: "/gautambisht/icon.png",
   },
   keywords: [
     "Frontend Developer",
